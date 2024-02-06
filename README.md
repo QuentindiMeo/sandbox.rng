@@ -9,12 +9,13 @@
     </tr>
     <tr>
       <td> <a href="https://github.com/QuentindiMeo/sandbox.rng/blob/main/des.py"><b>des.py</b></a> </td>
-    </tr>
-    <tr>
       <td> FR </td>
+      <td> A demonstration of the law of large numbers using dice </td>
     </tr>
     <tr>
-      <td> A demonstration of the law of large numbers using dice </td>
+      <td> ... </td>
+      <td> ... </td>
+      <td> ... </td>
     </tr>
   </table>
 </div>
