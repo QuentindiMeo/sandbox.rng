@@ -1,9 +1,12 @@
-from random import randint
-from time import time_ns as now
+######## CONSTANTS ########
 
 STATS_PRE = 3
 PRECISION = 7
 MAX_POWER = 10
+
+######## DECORATOR ########
+
+from time import time_ns as now
 
 def timed_rv(f):
     def wrapper(*args, **kwargs):
@@ -17,7 +20,9 @@ def timed_rv(f):
         return return_value
     return wrapper
 
-###########################                                                                                                            
+######## MAIN CORP ########
+
+from random import randint
 
 @timed_rv
 def iterate(precision: int, x: int, precedent: float) -> float:
@@ -42,7 +47,7 @@ def main(prec: int, maxpow: int) -> None:
         rv = iterate(prec, x, rv)
         print(end = "" if x == maxpow - 1 else "\n")
 
-###########################                                                                                                            
+########## PREP ###########
 
 from os import name as osName
 from signal import signal as bindSignal, SIGINT, SIGTERM
@@ -54,3 +59,23 @@ def getContext(frame: str) -> str:
 def CtrlDHandler(signal_received: int, frame: str) -> None:
     print(f"\n! SIGTERM ({signal_received}) interruption à {getContext(frame)} !", flush = True)
     exit(0)
+
+def CtrlCHandler(signal_received: int, frame: str) -> None:
+    print(f"\n! SIGINT ({signal_received}) interruption caught in {getContext(frame)} !", flush=True)
+    exit(0)
+
+def CtrlHandler() -> None:
+    bindSignal(SIGINT, CtrlCHandler)
+    bindSignal(SIGTERM, CtrlDHandler)
+
+from sys import argv as av
+
+if (__name__ == '__main__'):
+    CtrlHandler()
+    limit = MAX_POWER
+    if (len(av) > 1):
+        try:
+            limit = int(av[1])
+            if (limit < 1): limit = MAX_POWER
+        except ValueError: pass
+    main(PRECISION, limit)
