@@ -7,8 +7,10 @@ MAX_POWER = 10
 ######## DECORATOR ########
 
 from time import time_ns as now
+from functools import wraps
 
 def timed_rv(f):
+    @wraps(f)
     def wrapper(*args, **kwargs):
         start = now()
         return_value = f(*args, **kwargs)
